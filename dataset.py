@@ -5,6 +5,7 @@ import os
 import os.path
 import numpy as np
 from numpy.random import randint
+import re
 
 class VideoRecord(object):
     def __init__(self, row):
@@ -57,7 +58,7 @@ class TSNDataSet(data.Dataset):
             return [x_img, y_img]
 
     def _parse_list(self):
-        self.video_list = [VideoRecord(x.strip().split('-| ')) for x in open(self.list_file)]  # give in input train_split1.txt and tes_split1.txt
+        self.video_list = [VideoRecord(x.replace("-"," ").split(" ")) for x in open(self.list_file)]  # give in input train_split1.txt and tes_split1.txt
 
     def _sample_indices(self, record):
         """

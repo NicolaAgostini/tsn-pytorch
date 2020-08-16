@@ -6,6 +6,7 @@ import os.path
 import numpy as np
 from numpy.random import randint
 import re
+from gaze_io_sample import *
 
 class VideoRecord(object):
     def __init__(self, row):
@@ -55,7 +56,21 @@ class TSNDataSet(data.Dataset):
 
     def _load_image(self, directory, idx):
         if self.modality == 'RGB' or self.modality == 'RGBDiff':
+            """
+            img = Image.open(os.path.join("/home/2/2014/nagostin/Desktop/frames/"+directory, directory + "_" +self.image_tmpl.format(idx))).convert('RGB')
+            gaze_center = return_gaze_point(idx,directory)  # sono normalizzati sulla grandezza dell'immagine
+            width, height = img.size
+            raggio = 40
+            pix = np.array(img)
+            x = pix[gaze_center[0]*width-raggio:gaze_center[0]*width+raggio,
+                gaze_center[1]*height-raggio:gaze_center[1]*height+raggio]
+
+            im = Image.fromarray(np.uint8(x))  # to convert back to img pil
+            
+            return [im]
+            """
             return [Image.open(os.path.join("/home/2/2014/nagostin/Desktop/frames/"+directory, directory + "_" +self.image_tmpl.format(idx))).convert('RGB')]
+
         elif self.modality == 'Flow':
             x_img = Image.open(os.path.join(directory, self.image_tmpl.format('x', idx))).convert('L')
             y_img = Image.open(os.path.join(directory, self.image_tmpl.format('y', idx))).convert('L')

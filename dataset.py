@@ -27,7 +27,7 @@ class VideoRecord(object):
         return int(self._data[7])-1
 
     @property
-    def start_ms(self):  # start time in milliseconds
+    def start_fr(self):  # start time in frame
         return int((int(self._data[3])/1000)*30)  # in frames number
 
 

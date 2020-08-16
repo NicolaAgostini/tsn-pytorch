@@ -93,7 +93,7 @@ class TSNDataSet(data.Dataset):
         offsets = offsets + record.start_fr
         return offsets + 1
 
-    def _get_test_indices(self, record):
+    def _get_test_indices(self, record):  # TODO fixme  like val and train indices ( offsets = offsets + record.start_fr)
 
         tick = (record.num_frames - self.new_length + 1) / float(self.num_segments)
 

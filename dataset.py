@@ -79,8 +79,8 @@ class TSNDataSet(data.Dataset):
             offsets = np.sort(randint(record.num_frames - self.new_length + 1, size=self.num_segments))
         else:
             offsets = np.zeros((self.num_segments,))
-        print(offsets)
-        print(offsets+record.start_fr)
+        print(record.path + " " + record.start_fr + "  " + offsets+ "  "+ record.label)
+
 
         return offsets + 1
 

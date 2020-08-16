@@ -80,7 +80,7 @@ class TSNDataSet(data.Dataset):
         else:
             offsets = np.zeros((self.num_segments,))
         print(offsets)
-        print(offsets+record.start_ms)
+        print(offsets+record.start_fr)
 
         return offsets + 1
 

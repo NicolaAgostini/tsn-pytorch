@@ -10,16 +10,16 @@ import re
 class VideoRecord(object):
     def __init__(self, row):
         self._data = row
-        print(self._data)
+        #print(self._data)
 
     @property
     def path(self):
-        return self._data[0]+self._data[1]+self._data[2]
+        return self._data[0]+"-"+self._data[1]+"-"+self._data[2]
 
     @property
     #def num_frames(self):
     def num_frames(self):  # total number of frames in the action
-        print(int(((int(self._data[4])/1000)*30)-((int(self._data[3])/1000)*30)))
+        #print(int(((int(self._data[4])/1000)*30)-((int(self._data[3])/1000)*30)))
         return int(((int(self._data[4])/1000)*30)-((int(self._data[3])/1000)*30))  # end frame - start frame
 
     @property

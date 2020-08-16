@@ -99,7 +99,7 @@ TSN Configurations:
             self.input_size = 224
             self.input_mean = [104, 117, 128]
             self.input_std = [1]
-            print(self.base_model.__dict__)
+            print(self.base_model._modules)
 
             if self.modality == 'Flow':
                 self.input_mean = [128]

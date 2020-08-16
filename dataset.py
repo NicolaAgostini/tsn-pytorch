@@ -12,21 +12,22 @@ class VideoRecord(object):
 
     @property
     def path(self):
-        return self._data[0]
+        return self._data[0]+self._data[1]+self._data[2]
 
     @property
-    def num_frames(self):
-        return int(self._data[1])
+    #def num_frames(self):
+    def num_frame(self):  # total number of frames in the action
+        return ((int(self._data[4])/1000)*30-(int(self._data[3])/1000)*30)  # end frame - start frame
 
     @property
     def label(self):
-        return int(self._data[2])
+        return int(self._data[7])
 
 
 class TSNDataSet(data.Dataset):
     def __init__(self, root_path, list_file,
                  num_segments=3, new_length=1, modality='RGB',
-                 image_tmpl='img_{:05d}.jpg', transform=None,
+                 image_tmpl="frame_{:010d}.jpg", transform=None,
                  force_grayscale=False, random_shift=True, test_mode=False):
 
         self.root_path = root_path
@@ -46,7 +47,7 @@ class TSNDataSet(data.Dataset):
 
     def _load_image(self, directory, idx):
         if self.modality == 'RGB' or self.modality == 'RGBDiff':
-            return [Image.open(os.path.join(directory, self.image_tmpl.format(idx))).convert('RGB')]
+            return [Image.open(os.path.join("/home/2/2014/nagostin/Desktop/frames/"+directory, directory + "_" +self.image_tmpl.format(idx))).convert('RGB')]
         elif self.modality == 'Flow':
             x_img = Image.open(os.path.join(directory, self.image_tmpl.format('x', idx))).convert('L')
             y_img = Image.open(os.path.join(directory, self.image_tmpl.format('y', idx))).convert('L')
@@ -54,7 +55,7 @@ class TSNDataSet(data.Dataset):
             return [x_img, y_img]
 
     def _parse_list(self):
-        self.video_list = [VideoRecord(x.strip().split(' ')) for x in open(self.list_file)]
+        self.video_list = [VideoRecord(x.strip().split('-| ')) for x in open(self.list_file)]  # give in input train_split1.txt and tes_split1.txt
 
     def _sample_indices(self, record):
         """
@@ -101,7 +102,7 @@ class TSNDataSet(data.Dataset):
     def get(self, record, indices):
 
         images = list()
-        for seg_ind in indices:
+        for seg_ind in indices:  # indices = [30,60,90]
             p = int(seg_ind)
             for i in range(self.new_length):
                 seg_imgs = self._load_image(record.path, p)

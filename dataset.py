@@ -28,7 +28,7 @@ class VideoRecord(object):
 
     @property
     def start_ms(self):  # start time in milliseconds
-        return ((int(self._data[3])/1000)*30)  # in frames number
+        return int((int(self._data[3])/1000)*30)  # in frames number
 
 
 
@@ -80,7 +80,7 @@ class TSNDataSet(data.Dataset):
         else:
             offsets = np.zeros((self.num_segments,))
         print(offsets)
-        print(offsets*record.start_ms)
+        print(offsets+record.start_ms)
 
         return offsets + 1
 

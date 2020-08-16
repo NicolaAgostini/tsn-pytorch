@@ -59,7 +59,7 @@ TSN Configurations:
             self.partialBN(True)
 
     def _prepare_tsn(self, num_class):
-        print(self.base_model.last_layer_name)
+        print(self.base_model.layers)
         feature_dim = getattr(self.base_model, self.base_model.last_layer_name).in_features
         if self.dropout == 0:
             setattr(self.base_model, self.base_model.last_layer_name, nn.Linear(feature_dim, num_class))

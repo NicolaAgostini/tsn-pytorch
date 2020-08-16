@@ -50,7 +50,14 @@ class TSNDataSet(data.Dataset):
 
     def _load_image(self, directory, idx):
         if self.modality == 'RGB' or self.modality == 'RGBDiff':
-            return [Image.open(os.path.join("/home/2/2014/nagostin/Desktop/frames/"+directory, directory + "_" +self.image_tmpl.format(idx))).convert('RGB')]
+            img = Image.open(os.path.join("/home/2/2014/nagostin/Desktop/frames/"+directory, directory + "_" +self.image_tmpl.format(idx))).convert('RGB')
+            data = list(img.getdata())
+
+            new_data = [(255, 255, 255) if x[0] == x[1] and x[1] == x[2] and x[0] > 127 else (x[0] - 100, x[1] - 100, x[2] - 100) for x in data]
+
+            img.putdata(new_data)
+            return [img]
+
         elif self.modality == 'Flow':
             x_img = Image.open(os.path.join(directory, self.image_tmpl.format('x', idx))).convert('L')
             y_img = Image.open(os.path.join(directory, self.image_tmpl.format('y', idx))).convert('L')

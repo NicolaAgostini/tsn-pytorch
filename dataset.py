@@ -26,6 +26,11 @@ class VideoRecord(object):
     def label(self):
         return int(self._data[7])-1
 
+    @property
+    def start_ms(self):  # start time in milliseconds
+        return ((int(self._data[3])/1000)*30)  # in frames number
+
+
 
 class TSNDataSet(data.Dataset):
     def __init__(self, root_path, list_file,
@@ -75,6 +80,8 @@ class TSNDataSet(data.Dataset):
         else:
             offsets = np.zeros((self.num_segments,))
         print(offsets)
+        print(offsets*record.start_ms)
+
         return offsets + 1
 
     def _get_val_indices(self, record):

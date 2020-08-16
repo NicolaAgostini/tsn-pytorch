@@ -79,8 +79,8 @@ class TSNDataSet(data.Dataset):
             offsets = np.sort(randint(record.num_frames - self.new_length + 1, size=self.num_segments))
         else:
             offsets = np.zeros((self.num_segments,))
-        print(record.path + " " + str(record.start_fr) + "  " + str(offsets)+ "  "+ str(record.label)+ str(offsets+record.start_fr))
-
+        #print(record.path + " " + str(record.start_fr) + "  " + str(offsets)+ "  "+ str(record.label)+ str(offsets+record.start_fr))
+        offsets = offsets+record.start_fr  # i want the frames number at 30 fps
 
         return offsets + 1
 
@@ -90,6 +90,7 @@ class TSNDataSet(data.Dataset):
             offsets = np.array([int(tick / 2.0 + tick * x) for x in range(self.num_segments)])
         else:
             offsets = np.zeros((self.num_segments,))
+        offsets = offsets + record.start_fr
         return offsets + 1
 
     def _get_test_indices(self, record):

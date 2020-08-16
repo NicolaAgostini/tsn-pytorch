@@ -17,7 +17,7 @@ class VideoRecord(object):
     @property
     #def num_frames(self):
     def num_frames(self):  # total number of frames in the action
-        return ((int(self._data[4])/1000)*30-(int(self._data[3])/1000)*30)  # end frame - start frame
+        return int(((int(self._data[4])/1000)*30)-((int(self._data[3])/1000)*30))  # end frame - start frame
 
     @property
     def label(self):

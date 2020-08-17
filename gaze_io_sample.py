@@ -205,8 +205,8 @@ def return_gaze_point(index_fr, file):
 
 
     index_at_24fps = round(index_fr/30)*24
-    print("index at 24 fps")
-    print(index_at_24fps)
+    #print("index at 24 fps")
+    #print(index_at_24fps)
     if len(test_data_01) < index_at_24fps:
         return 0.5, 0.5
 

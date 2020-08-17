@@ -56,20 +56,29 @@ class TSNDataSet(data.Dataset):
 
     def _load_image(self, directory, idx):
         if self.modality == 'RGB' or self.modality == 'RGBDiff':
-            """
+
             img = Image.open(os.path.join("/home/2/2014/nagostin/Desktop/frames/"+directory, directory + "_" +self.image_tmpl.format(idx))).convert('RGB')
-            gaze_center = return_gaze_point(idx,directory)  # sono normalizzati sulla grandezza dell'immagine
+            gaze_center_x, gaze_center_y = return_gaze_point(idx,directory)  # sono normalizzati sulla grandezza dell'immagine
             width, height = img.size
-            raggio = 40
+            raggio = 50
             pix = np.array(img)
-            x = pix[gaze_center[0]*width-raggio:gaze_center[0]*width+raggio,
-                gaze_center[1]*height-raggio:gaze_center[1]*height+raggio]
+            gaze_center_x, gaze_center_y = gaze_center_x * width, gaze_center_y*height
+            if gaze_center_x-raggio < 0:
+                gaze_center_x = raggio
+            if gaze_center_x + raggio > width:
+                gaze_center_x = gaze_center_x-raggio
+            if gaze_center_y - raggio < 0:
+                gaze_center_y = raggio
+            if gaze_center_y + raggio > height:
+                gaze_center_y = gaze_center_y - raggio
+            x = pix[gaze_center_x-raggio:gaze_center_x+raggio,
+                gaze_center_y-raggio:gaze_center_y+raggio]
 
             im = Image.fromarray(np.uint8(x))  # to convert back to img pil
             
             return [im]
-            """
-            return [Image.open(os.path.join("/home/2/2014/nagostin/Desktop/frames/"+directory, directory + "_" +self.image_tmpl.format(idx))).convert('RGB')]
+
+            #return [Image.open(os.path.join("/home/2/2014/nagostin/Desktop/frames/"+directory, directory + "_" +self.image_tmpl.format(idx))).convert('RGB')]
 
         elif self.modality == 'Flow':
             x_img = Image.open(os.path.join(directory, self.image_tmpl.format('x', idx))).convert('L')

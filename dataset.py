@@ -71,10 +71,11 @@ class TSNDataSet(data.Dataset):
                 gaze_center_y = raggio
             if gaze_center_y + raggio > height:
                 gaze_center_y = gaze_center_y - raggio
-            x = pix[gaze_center_x-raggio:gaze_center_x+raggio,
-                gaze_center_y-raggio:gaze_center_y+raggio]
+            x = pix[int(gaze_center_x-raggio):int(gaze_center_x+raggio),
+                int(gaze_center_y-raggio):int(gaze_center_y+raggio)]
 
             im = Image.fromarray(np.uint8(x))  # to convert back to img pil
+
             
             return [im]
 

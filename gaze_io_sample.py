@@ -304,13 +304,6 @@ def return_cropped_img(image, gaze_x, gaze_y, h, w, raggio, type = "hard"):
         mask_soft = get_gaze_mask(gaze_point, image_size=(h, w), mask_kind='soft', radius=raggio)
         image_gaze = image * mask_soft
 
-    plt.imshow(image_gaze.astype('uint8'))
-    plt.savefig("trial.png")
-
-
-
-
-
     return image_gaze
 
 

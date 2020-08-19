@@ -66,7 +66,6 @@ class TSNDataSet(data.Dataset):
             x = return_cropped_img(pix, gaze_center_x, gaze_center_y, height, width, raggio,"soft")
 
             im = Image.fromarray(np.uint8(x))  # to convert back to img pil
-            im.save("trial.png")
             
             return [im]
 

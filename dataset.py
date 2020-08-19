@@ -60,19 +60,10 @@ class TSNDataSet(data.Dataset):
             img = Image.open(os.path.join("/home/2/2014/nagostin/Desktop/frames/"+directory, directory + "_" +self.image_tmpl.format(idx))).convert('RGB')
             gaze_center_x, gaze_center_y = return_gaze_point(idx,directory)  # sono normalizzati sulla grandezza dell'immagine
             width, height = img.size
-            raggio = 50
+            raggio = 60
             pix = np.array(img)
             gaze_center_x, gaze_center_y = gaze_center_x * width, gaze_center_y*height
-            if gaze_center_x-raggio < 0:
-                gaze_center_x = raggio
-            if gaze_center_x + raggio > width:
-                gaze_center_x = gaze_center_x-raggio
-            if gaze_center_y - raggio < 0:
-                gaze_center_y = raggio
-            if gaze_center_y + raggio > height:
-                gaze_center_y = gaze_center_y - raggio
-            x = pix[int(gaze_center_x-raggio):int(gaze_center_x+raggio),
-                int(gaze_center_y-raggio):int(gaze_center_y+raggio)]
+            x = return_cropped_img(pix, gaze_center_x, gaze_center_y, height, width, raggio,"soft")
 
             im = Image.fromarray(np.uint8(x))  # to convert back to img pil
 
